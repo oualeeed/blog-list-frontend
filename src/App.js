@@ -2,16 +2,18 @@ import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import User from './components/User'
 import blogService from './services/blogs'
-import axios from 'axios'
+import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+  const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
+  const [url, setURL] = useState('')
 
   useEffect(() => {
-    debugger
     const loggedInUserJSON = window.localStorage.getItem('loggedInUser')
     if (loggedInUserJSON !== null ){ 
       const loggedInUser = JSON.parse(loggedInUserJSON)
@@ -25,27 +27,44 @@ const App = () => {
     )  
   }, [])
 
-  const handleLogin = async (event) => {
+  const login = async (event) => {
     event.preventDefault()
-    const response = await axios.post('/api/login', {username, password})
-    window.localStorage.setItem(
-      'loggedInUser', JSON.stringify(response.data)
-    )
-    setUser(response.data)
-    setUsername('')
-    setPassword('')
+    const credentials = {
+      username,
+      password,
+    }
+    try{
+      const response = await loginService.login(credentials)
+      setUser(response)
+      blogService.setToken(response.token)
+      setUsername('')
+      setPassword('')
+    }catch(error){
+      
+    }
   }
 
   const logout = (event) => {
-    window.localStorage.removeItem('loggedInUser')
+    loginService.logout()
     setUser(null)
+  }
+
+  const createBlog = async (event) => {
+    event.preventDefault()
+    const createdBlog = await blogService.create({
+      title, author, url
+    })
+    setBlogs(blogs.concat(createdBlog))
+    setAuthor('')
+    setTitle('')
+    setURL('')
   }
 
   if (user === null) {
     return (
       <div>
         <h2>Log in to application</h2>
-        <form onSubmit={handleLogin}>
+        <form onSubmit={login}>
           <div>
             username : <input 
             type='text'
@@ -72,6 +91,33 @@ const App = () => {
     <div>
       <h2>blogs</h2>
       <User user={user} logout={logout} />
+      <form onSubmit={createBlog}>
+        <div>
+          Title : <input
+          type='text'
+          value={title}
+          name='Title'
+          onChange={({ target }) => setTitle(target.value)}
+          />
+        </div>
+        <div>
+          Author : <input
+          type='text'
+          value={author}
+          name='Author'
+          onChange={({ target }) => setAuthor(target.value)}
+          />
+        </div>
+        <div>
+          URL : <input
+          type='text'
+          value={url}
+          name='URL'
+          onChange={({ target }) => setURL(target.value)}
+          />
+        </div>
+        <button type='submit'>Create</button>
+      </form>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}

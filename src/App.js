@@ -11,6 +11,15 @@ const App = () => {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
+    debugger
+    const loggedInUserJSON = window.localStorage.getItem('loggedInUser')
+    if (loggedInUserJSON !== null ){ 
+      const loggedInUser = JSON.parse(loggedInUserJSON)
+      setUser(loggedInUser)
+    }
+  }, [])
+
+  useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
     )  
@@ -19,6 +28,9 @@ const App = () => {
   const handleLogin = async (event) => {
     event.preventDefault()
     const response = await axios.post('/api/login', {username, password})
+    window.localStorage.setItem(
+      'loggedInUser', JSON.stringify(response.data)
+    )
     setUser(response.data)
     setUsername('')
     setPassword('')

@@ -1,0 +1,22 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+    scroll-behavior: smooth;
+    
+}
+div.notification {
+    width: 80%;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: #eee;
+    outline: 10px solid #eee;
+}
+
+.error{
+    color: red;
+    border-left: 5px solid red;
+}
+
+.info{
+    color: green;
+    border-left: 5px solid green;
+}

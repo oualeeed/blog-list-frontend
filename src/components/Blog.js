@@ -1,5 +1,5 @@
 import { useState } from "react"
-
+import PropTypes from 'prop-types'
 
 const Blog = ({blog, upvoteBlog}) => {
   const [visible, setVisible] = useState(false)
@@ -28,8 +28,14 @@ const Blog = ({blog, upvoteBlog}) => {
       likes {blog.likes} <button onClick={upvoteBlog(blog)}>like</button><br />
       { (blog.user !== undefined ) && blog.user.username } <br />  
       <button onClick={toggleVisibility}>hide</button>
+      
     </div>
   </div>  
 )}
+
+Blog.prototype = {
+  blog: PropTypes.object.isRequired,
+  upvoteBlog: PropTypes.func.isRequired,
+}
 
 export default Blog

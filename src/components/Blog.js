@@ -1,11 +1,11 @@
-import { useState } from "react"
+import { useState } from 'react'
 import PropTypes from 'prop-types'
 
-const Blog = ({blog, upvoteBlog}) => {
+const Blog = ({ blog, upvoteBlog }) => {
   const [visible, setVisible] = useState(false)
-  
-  const hideWhenVisble = {display : visible ? 'none' : ''}
-  const showWhenVisble = {display : visible ? '' : 'none'}
+
+  const hideWhenVisble = { display : visible ? 'none' : '' }
+  const showWhenVisble = { display : visible ? '' : 'none' }
 
   const toggleVisibility = () => setVisible(!visible)
   const style = {
@@ -17,21 +17,21 @@ const Blog = ({blog, upvoteBlog}) => {
   }
 
   return (
-  <div style={style}>
-    <div style={hideWhenVisble}>
-      {blog.title} by {blog.author} 
-      <button onClick={toggleVisibility}>view</button>
-    </div>
-    <div style={showWhenVisble}>
-      {blog.title} by {blog.author} <br />
-      {blog.url} <br />
+    <div style={style}>
+      <div style={hideWhenVisble}>
+        {blog.title} by {blog.author}
+        <button onClick={toggleVisibility}>view</button>
+      </div>
+      <div style={showWhenVisble}>
+        {blog.title} by {blog.author} <br />
+        {blog.url} <br />
       likes {blog.likes} <button onClick={upvoteBlog(blog)}>like</button><br />
-      { (blog.user !== undefined ) && blog.user.username } <br />  
-      <button onClick={toggleVisibility}>hide</button>
-      
+        { (blog.user !== undefined ) && blog.user.username } <br />
+        <button onClick={toggleVisibility}>hide</button>
+
+      </div>
     </div>
-  </div>  
-)}
+  )}
 
 Blog.prototype = {
   blog: PropTypes.object.isRequired,

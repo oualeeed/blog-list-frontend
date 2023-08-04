@@ -18,7 +18,7 @@ const App = () => {
 
   useEffect(() => {
     const loggedInUserJSON = window.localStorage.getItem('loggedInUser')
-    if (loggedInUserJSON !== null ){ 
+    if (loggedInUserJSON !== null ){
       const loggedInUser = JSON.parse(loggedInUserJSON)
       setUser(loggedInUser)
     }
@@ -27,7 +27,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs(blogs)
-    )  
+    )
   }, [])
 
   const login = async (event) => {
@@ -48,11 +48,12 @@ const App = () => {
   }
 
   const logout = (event) => {
+    event.preventDefault()
     loginService.logout()
     setUser(null)
   }
 
-  const createBlog = async ({title, author, url}) => {
+  const createBlog = async ({ title, author, url }) => {
     try {
       const createdBlog = await blogService.create({
         title, author, url
@@ -63,12 +64,12 @@ const App = () => {
     } catch(error){
       notify('something wen\'t wrong please try again.', ERROR)
       blogService.setToken(user.token)
-      return false 
+      return false
     }
   }
 
   const upvoteBlog = (blog) => async () => {
-    
+
     const updatedBlog = {
       ...blog,
       likes : blog.likes + 1
@@ -82,7 +83,7 @@ const App = () => {
   const notify = (message, type) => {
     setNotification(message)
     setNotificationType(type)
-    setTimeout(()=> {
+    setTimeout(() => {
       setNotification('')
     }, 5000)
   }
@@ -99,19 +100,19 @@ const App = () => {
         <Notification notification={ notification } type={notificationType}/>
         <form onSubmit={login}>
           <div>
-            username : <input 
-            type='text'
-            value={username}
-            name='Username'
-            onChange={({ target }) => setUsername(target.value)}
+            username : <input
+              type='text'
+              value={username}
+              name='Username'
+              onChange={({ target }) => setUsername(target.value)}
             />
           </div>
           <div>
             password : <input
-            type='text'
-            value={password}
-            name='Password'
-            onChange={({ target }) => setPassword(target.value)}
+              type='text'
+              value={password}
+              name='Password'
+              onChange={({ target }) => setPassword(target.value)}
             />
           </div>
           <button type='submit'>login</button>
@@ -126,14 +127,14 @@ const App = () => {
       <h2>blogs</h2>
       <User user={user} logout={logout} />
       <Togglable  buttonLabel='create a note'>
-        <NoteForm 
+        <NoteForm
           createBlog={createBlog}
         />
       </Togglable>
-      {blogsToshow.map(blog =>{
+      {blogsToshow.map(blog => {
         return (
-            <Blog key={blog.id} blog={blog} upvoteBlog={upvoteBlog} />
-        )    
+          <Blog key={blog.id} blog={blog} upvoteBlog={upvoteBlog} />
+        )
       })}
     </div>
   )

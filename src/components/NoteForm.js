@@ -1,49 +1,48 @@
 import { useState } from 'react'
 
 
-const NoteForm = ({createBlog}) => {
-    const [url, setURL] = useState('')
-    const [title, setTitle] = useState('')
-    const [author, setAuthor] = useState('')
+const NoteForm = ({ createBlog }) => {
+  const [url, setURL] = useState('')
+  const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
 
-    const addBlog = async (event) => {
-        debugger
-        event.preventDefault()
-        if ( await createBlog({ title, author, url }) ){
-            setAuthor('')
-            setTitle('')
-            setURL('')  
-        }
+  const addBlog = async (event) => {
+    event.preventDefault()
+    if ( await createBlog({ title, author, url }) ){
+      setAuthor('')
+      setTitle('')
+      setURL('')
     }
-    return (
-        <form onSubmit={addBlog}>
-        <div>
+  }
+  return (
+    <form onSubmit={addBlog}>
+      <div>
           Title : <input
           type='text'
           value={title}
           name='Title'
           onChange={({ target }) => setTitle(target.value)}
-          />
-        </div>
-        <div>
+        />
+      </div>
+      <div>
           Author : <input
           type='text'
           value={author}
           name='Author'
           onChange={({ target }) => setAuthor(target.value)}
-          />
-        </div>
-        <div>
+        />
+      </div>
+      <div>
           URL : <input
           type='text'
           value={url}
           name='URL'
           onChange={({ target }) => setURL(target.value)}
-          />
-        </div>
-        <button type='submit'>Create</button>
-      </form>
-    )
+        />
+      </div>
+      <button type='submit'>Create</button>
+    </form>
+  )
 }
 
 export default NoteForm

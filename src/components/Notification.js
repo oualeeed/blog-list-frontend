@@ -1,8 +1,8 @@
-const Notification = ({ notification, type}) => {
-  if ( notification === '' ) return null 
+const Notification = ({ notification, type }) => {
+  if ( notification === '' ) return null
   return (
     <div className={`notification ${type}`} >
-        { notification }
+      { notification }
     </div>
   )
 

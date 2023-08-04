@@ -13,7 +13,6 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-
   const [notification, setNotification] = useState('')
   const [notificationType, setNotificationType] = useState('')
 
@@ -27,7 +26,7 @@ const App = () => {
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
-      setBlogs( blogs )
+      setBlogs(blogs)
     )  
   }, [])
 
@@ -68,6 +67,16 @@ const App = () => {
     }
   }
 
+  const upvoteBlog = (blog) => async () => {
+    
+    const updatedBlog = {
+      ...blog,
+      likes : blog.likes + 1
+    }
+    const response = await blogService.update(updatedBlog)
+    setBlogs(blogs.map((blog) => blog.id === response.id ? response : blog))
+  }
+
   const ERROR = 'error'
   const INFO = 'info'
   const notify = (message, type) => {
@@ -78,7 +87,10 @@ const App = () => {
     }, 5000)
   }
 
-
+  let blogsToshow = [...blogs]
+  blogsToshow.sort((a, b) => {
+    return b.likes - a.likes
+  })
 
   if (user === null) {
     return (
@@ -118,9 +130,9 @@ const App = () => {
           createBlog={createBlog}
         />
       </Togglable>
-      {blogs.map(blog =>{
+      {blogsToshow.map(blog =>{
         return (
-            <Blog key={blog.id} blog={blog} />
+            <Blog key={blog.id} blog={blog} upvoteBlog={upvoteBlog} />
         )    
       })}
     </div>

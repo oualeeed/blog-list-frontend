@@ -18,17 +18,16 @@ const Blog = ({ blog, upvoteBlog }) => {
 
   return (
     <div style={style}>
-      <div style={hideWhenVisble}>
+      <div style={hideWhenVisble} className='blog-shrinked'>
         {blog.title} by {blog.author}
         <button onClick={toggleVisibility}>view</button>
       </div>
-      <div style={showWhenVisble}>
+      <div style={showWhenVisble} className='blog-expanded'>
         {blog.title} by {blog.author} <br />
         {blog.url} <br />
       likes {blog.likes} <button onClick={upvoteBlog(blog)}>like</button><br />
         { (blog.user !== undefined ) && blog.user.username } <br />
         <button onClick={toggleVisibility}>hide</button>
-
       </div>
     </div>
   )}

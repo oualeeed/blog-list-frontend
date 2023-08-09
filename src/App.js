@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Notification from './components/Notification'
 import Blog from './components/Blog'
 import User from './components/User'
-import NoteForm from './components/NoteForm'
+import BlogForm from './components/NoteForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import './style.css'
@@ -127,7 +127,7 @@ const App = () => {
       <h2>blogs</h2>
       <User user={user} logout={logout} />
       <Togglable  buttonLabel='create a note'>
-        <NoteForm
+        <BlogForm
           createBlog={createBlog}
         />
       </Togglable>

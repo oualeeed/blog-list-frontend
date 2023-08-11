@@ -94,38 +94,51 @@ const App = () => {
   })
 
   if (user === null) {
+    const center = {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100vh',
+    }
     return (
-      <div>
-        <h2>Log in to application</h2>
-        <Notification notification={ notification } type={notificationType}/>
-        <form onSubmit={login}>
-          <div>
-            username : <input
-              type='text'
-              value={username}
-              name='Username'
-              onChange={({ target }) => setUsername(target.value)}
-            />
-          </div>
-          <div>
-            password : <input
-              type='text'
-              value={password}
-              name='Password'
-              onChange={({ target }) => setPassword(target.value)}
-            />
-          </div>
-          <button type='submit'>login</button>
-        </form>
+      <div style={center}>
+        <div className='login-div'>
+          <h2>Log in to application</h2>
+          <Notification notification={ notification } type={notificationType}/>
+          <form onSubmit={login}>
+            <div>
+              <input
+                type='text'
+                value={username}
+                name='Username'
+                placeholder='username'
+                onChange={({ target }) => setUsername(target.value)}
+              />
+            </div>
+            <div>
+              <input
+                type='text'
+                value={password}
+                name='Password'
+                placeholder='password'
+                onChange={({ target }) => setPassword(target.value)}
+              />
+            </div>
+            <div className='container-center'>
+              <button type='submit'>login</button>
+            </div>
+          </form>
+        </div>
       </div>
+
     )
   }
 
   return (
     <div>
-      <Notification notification={ notification } type={notificationType}/>
-      <h2>blogs</h2>
+      <h2>Blogs</h2>
       <User user={user} logout={logout} />
+      <Notification notification={ notification } type={notificationType}/>
       <Togglable  buttonLabel='create a note'>
         <BlogForm
           createBlog={createBlog}

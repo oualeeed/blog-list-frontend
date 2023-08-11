@@ -3,6 +3,11 @@
     scroll-behavior: smooth;
     
 }
+
+.container-center{
+    display: flex;
+    justify-content: center;
+}
 div.notification {
     width: 80%;
     margin: 20px auto;
@@ -20,3 +25,33 @@ div.notification {
     color: green;
     border-left: 5px solid green;
 }
+
+.login-div{
+    background-color: #eee;
+    box-shadow:  0px 0px 10px rgb(117, 114, 114);
+    padding: 10px;
+    border-radius: 5px ;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.login-div div {
+    margin-bottom: 0.3em;
+
+}
+
+.login-div button {
+    border: none;
+    background-color: #aaa;
+    border-radius: 3px;
+    font-size: 1.1em;
+    padding: 0.2em;
+    transition: 0.5s ease;
+}
+
+.login-div button:hover {
+    transform: scale(1.1);
+}
+

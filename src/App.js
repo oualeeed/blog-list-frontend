@@ -19,8 +19,9 @@ const App = () => {
   useEffect(() => {
     const loggedInUserJSON = window.localStorage.getItem('loggedInUser')
     if (loggedInUserJSON !== null ){
-      const loggedInUser = JSON.parse(loggedInUserJSON)
-      setUser(loggedInUser)
+      const user = JSON.parse(loggedInUserJSON)
+      setUser(user)
+      blogService.setToken(user.token)
     }
   }, [])
 

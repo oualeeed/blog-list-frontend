@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 
-const Blog = ({ blog, upvoteBlog }) => {
+const Blog = ({ blog, upvoteBlog, user, removeBlog }) => {
   const [visible, setVisible] = useState(false)
 
   const hideWhenVisble = { display : visible ? 'none' : '' }
@@ -15,7 +15,8 @@ const Blog = ({ blog, upvoteBlog }) => {
     borderWidth: 1,
     marginBottom: 5
   }
-
+  console.log(user)
+  console.log(blog.user)
   return (
     <div style={style}>
       <div style={hideWhenVisble} className='blog-shrinked'>
@@ -28,6 +29,15 @@ const Blog = ({ blog, upvoteBlog }) => {
       likes {blog.likes} <button onClick={upvoteBlog(blog)}>like</button><br />
         { (blog.user !== undefined ) && blog.user.username } <br />
         <button onClick={toggleVisibility}>hide</button>
+        {
+          (blog.user.username === user.username) &&
+          (<>
+            <br/>
+            <button onClick={removeBlog}>
+              remove
+            </button>
+          </>)
+        }
       </div>
     </div>
   )}

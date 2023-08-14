@@ -8,6 +8,7 @@ import loginService from './services/login'
 import './style.css'
 import Togglable from './components/Togglable'
 
+
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
@@ -94,6 +95,11 @@ const App = () => {
     return b.likes - a.likes
   })
 
+  const removeBlog = (id) => () => {
+    blogService.remove(id)
+    setBlogs(blogs.filter(b => b.id !== id))
+  }
+
   if (user === null) {
     const center = {
       display: 'flex',
@@ -147,7 +153,13 @@ const App = () => {
       </Togglable>
       {blogsToshow.map(blog => {
         return (
-          <Blog key={blog.id} blog={blog} upvoteBlog={upvoteBlog} />
+          <Blog
+            key={blog.id}
+            blog={blog}
+            user={user}
+            upvoteBlog={upvoteBlog}
+            removeBlog={removeBlog(blog.id)}
+          />
         )
       })}
     </div>

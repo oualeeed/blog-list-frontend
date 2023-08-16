@@ -37,3 +37,36 @@ Cypress.Commands.add('login', function({ username, password }) {
 
   cy.visit('http://localhost:3000')
 })
+
+Cypress.Commands.add('createBlog', function({ title, author, url }) {
+  cy.request({
+    url: `${Cypress.env('BACKEND')}/blogs`,
+    method: 'POST',
+    body:{ title, author, url },
+    headers: {
+      'Authorization' : `Bearer ${JSON.parse(window.localStorage.getItem('loggedInUser')).token}`
+    }
+  })
+
+  cy.visit('')
+})
+
+Cypress.Commands.add('logout', function() {
+  window.localStorage.clear()
+})
+
+Cypress.Commands.add('giveLikes', function(title) {
+  cy
+    .contains(title)
+    .contains('view')
+    .click()
+
+  cy.contains(title).parent().find('.blog-expanded').find('#like-button').click()
+  cy.wait(500)
+
+  cy
+    .contains(title)
+    .parent()
+    .contains('hide')
+    .click()
+})

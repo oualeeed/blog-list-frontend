@@ -18,22 +18,24 @@ const Blog = ({ blog, upvoteBlog, user, removeBlog }) => {
   console.log(user)
   console.log(blog.user)
   return (
-    <div style={style}>
+    <div style={style} className='blog'>
       <div style={hideWhenVisble} className='blog-shrinked'>
         {blog.title} by {blog.author}
-        <button onClick={toggleVisibility}>view</button>
+        <button onClick={toggleVisibility} >view</button>
       </div>
       <div style={showWhenVisble} className='blog-expanded'>
         {blog.title} by {blog.author} <br />
         {blog.url} <br />
-      likes {blog.likes} <button onClick={upvoteBlog(blog)}>like</button><br />
+      likes {blog.likes} <button id='like-button' onClick={upvoteBlog(blog)}>like</button><br />
         { (blog.user !== undefined ) && blog.user.username } <br />
         <button onClick={toggleVisibility}>hide</button>
         {
           (blog.user.username === user.username) &&
           (<>
             <br/>
-            <button onClick={removeBlog}>
+            <button
+              id='remove-button'
+              onClick={removeBlog}>
               remove
             </button>
           </>)

@@ -15,8 +15,7 @@ const Blog = ({ blog, upvoteBlog, user, removeBlog }) => {
     borderWidth: 1,
     marginBottom: 5,
   }
-  console.log(user)
-  console.log(blog.user)
+
   return (
     <div style={style} className="blog">
       <div style={hideWhenVisble} className="blog-shrinked">

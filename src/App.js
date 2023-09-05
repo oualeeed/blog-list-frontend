@@ -7,14 +7,20 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import './style.css'
 import Togglable from './components/Togglable'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  notifyMessage,
+  removeNotification,
+} from './reducers/notificationReducer'
+import { initializeBlogs, setBlogs } from './reducers/blogReducer'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
+  const blogs = useSelector((state) => state.blogs)
+  const { message, type } = useSelector((state) => state.notification)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [notification, setNotification] = useState('')
-  const [notificationType, setNotificationType] = useState('')
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const loggedInUserJSON = window.localStorage.getItem('loggedInUser')
@@ -26,7 +32,7 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs))
+    dispatch(initializeBlogs())
   }, [])
 
   const login = async (event) => {
@@ -81,10 +87,9 @@ const App = () => {
   const ERROR = 'error'
   const INFO = 'info'
   const notify = (message, type) => {
-    setNotification(message)
-    setNotificationType(type)
+    dispatch(notifyMessage({ message, type }))
     setTimeout(() => {
-      setNotification('')
+      dispatch(removeNotification())
     }, 5000)
   }
 
@@ -109,7 +114,7 @@ const App = () => {
       <div style={center}>
         <div className="login-div">
           <h2>Log in to application</h2>
-          <Notification notification={notification} type={notificationType} />
+          <Notification notification={message} type={type} />
           <form onSubmit={login}>
             <div>
               <input
@@ -142,7 +147,7 @@ const App = () => {
     <div>
       <h2>Blogs</h2>
       <User user={user} logout={logout} />
-      <Notification notification={notification} type={notificationType} />
+      <Notification notification={message} type={type} />
       <Togglable buttonLabel="create a note">
         <BlogForm createBlog={createBlog} />
       </Togglable>

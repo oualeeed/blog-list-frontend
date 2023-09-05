@@ -10,14 +10,14 @@ describe('<Blog />', () => {
 
   beforeEach(() => {
     container = render(
-      <Blog blog={{
-        title: 'some title for test',
-        author:'test author',
-        url: 'url',
-      }}
-
-      upvoteBlog={ upvoteBlog }
-      />
+      <Blog
+        blog={{
+          title: 'some title for test',
+          author: 'test author',
+          url: 'url',
+        }}
+        upvoteBlog={upvoteBlog}
+      />,
     ).container
   })
 

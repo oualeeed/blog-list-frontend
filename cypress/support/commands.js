@@ -24,49 +24,45 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add('login', function({ username, password }) {
+Cypress.Commands.add('login', function ({ username, password }) {
   cy.request('POST', 'http://localhost:8080/api/login', {
     username: username,
     password: password,
   }).then((response) => {
-    window.localStorage.setItem(
-      'loggedInUser',
-      JSON.stringify(response.body)
-    )
+    window.localStorage.setItem('loggedInUser', JSON.stringify(response.body))
   })
 
   cy.visit('http://localhost:3000')
 })
 
-Cypress.Commands.add('createBlog', function({ title, author, url }) {
+Cypress.Commands.add('createBlog', function ({ title, author, url }) {
   cy.request({
     url: `${Cypress.env('BACKEND')}/blogs`,
     method: 'POST',
-    body:{ title, author, url },
+    body: { title, author, url },
     headers: {
-      'Authorization' : `Bearer ${JSON.parse(window.localStorage.getItem('loggedInUser')).token}`
-    }
+      Authorization: `Bearer ${
+        JSON.parse(window.localStorage.getItem('loggedInUser')).token
+      }`,
+    },
   })
 
   cy.visit('')
 })
 
-Cypress.Commands.add('logout', function() {
+Cypress.Commands.add('logout', function () {
   window.localStorage.clear()
 })
 
-Cypress.Commands.add('giveLikes', function(title) {
-  cy
-    .contains(title)
-    .contains('view')
-    .click()
+Cypress.Commands.add('giveLikes', function (title) {
+  cy.contains(title).contains('view').click()
 
-  cy.contains(title).parent().find('.blog-expanded').find('#like-button').click()
+  cy.contains(title)
+    .parent()
+    .find('.blog-expanded')
+    .find('#like-button')
+    .click()
   cy.wait(500)
 
-  cy
-    .contains(title)
-    .parent()
-    .contains('hide')
-    .click()
+  cy.contains(title).parent().contains('hide').click()
 })

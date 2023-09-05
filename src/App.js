@@ -8,7 +8,6 @@ import loginService from './services/login'
 import './style.css'
 import Togglable from './components/Togglable'
 
-
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
@@ -19,7 +18,7 @@ const App = () => {
 
   useEffect(() => {
     const loggedInUserJSON = window.localStorage.getItem('loggedInUser')
-    if (loggedInUserJSON !== null ){
+    if (loggedInUserJSON !== null) {
       const user = JSON.parse(loggedInUserJSON)
       setUser(user)
       blogService.setToken(user.token)
@@ -27,9 +26,7 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs(blogs)
-    )
+    blogService.getAll().then((blogs) => setBlogs(blogs))
   }, [])
 
   const login = async (event) => {
@@ -38,13 +35,13 @@ const App = () => {
       username,
       password,
     }
-    try{
+    try {
       const response = await loginService.login(credentials)
       setUser(response)
       blogService.setToken(response.token)
       setUsername('')
       setPassword('')
-    }catch(error){
+    } catch (error) {
       notify('Wrong username or password', ERROR)
     }
   }
@@ -58,26 +55,27 @@ const App = () => {
   const createBlog = async ({ title, author, url }) => {
     try {
       const createdBlog = await blogService.create({
-        title, author, url
+        title,
+        author,
+        url,
       })
       setBlogs(blogs.concat(createdBlog))
       notify(`a new blog ${title}! By ${author}`, INFO)
       return true
-    } catch(error){
-      notify('something wen\'t wrong please try again.', ERROR)
+    } catch (error) {
+      notify("something wen't wrong please try again.", ERROR)
       blogService.setToken(user.token)
       return false
     }
   }
 
   const upvoteBlog = (blog) => async () => {
-
     const updatedBlog = {
       ...blog,
-      likes : blog.likes + 1
+      likes: blog.likes + 1,
     }
     const response = await blogService.update(updatedBlog)
-    setBlogs(blogs.map((blog) => blog.id === response.id ? response : blog))
+    setBlogs(blogs.map((blog) => (blog.id === response.id ? response : blog)))
   }
 
   const ERROR = 'error'
@@ -97,7 +95,7 @@ const App = () => {
 
   const removeBlog = (id) => () => {
     blogService.remove(id)
-    setBlogs(blogs.filter(b => b.id !== id))
+    setBlogs(blogs.filter((b) => b.id !== id))
   }
 
   if (user === null) {
@@ -109,35 +107,34 @@ const App = () => {
     }
     return (
       <div style={center}>
-        <div className='login-div'>
+        <div className="login-div">
           <h2>Log in to application</h2>
-          <Notification notification={ notification } type={notificationType}/>
+          <Notification notification={notification} type={notificationType} />
           <form onSubmit={login}>
             <div>
               <input
-                type='text'
+                type="text"
                 value={username}
-                id='username'
-                placeholder='username'
+                id="username"
+                placeholder="username"
                 onChange={({ target }) => setUsername(target.value)}
               />
             </div>
             <div>
               <input
-                type='text'
+                type="text"
                 value={password}
-                id='password'
-                placeholder='password'
+                id="password"
+                placeholder="password"
                 onChange={({ target }) => setPassword(target.value)}
               />
             </div>
-            <div className='container-center'>
-              <button type='submit'>log in</button>
+            <div className="container-center">
+              <button type="submit">log in</button>
             </div>
           </form>
         </div>
       </div>
-
     )
   }
 
@@ -145,13 +142,11 @@ const App = () => {
     <div>
       <h2>Blogs</h2>
       <User user={user} logout={logout} />
-      <Notification notification={ notification } type={notificationType}/>
-      <Togglable  buttonLabel='create a note'>
-        <BlogForm
-          createBlog={createBlog}
-        />
+      <Notification notification={notification} type={notificationType} />
+      <Togglable buttonLabel="create a note">
+        <BlogForm createBlog={createBlog} />
       </Togglable>
-      {blogsToshow.map(blog => {
+      {blogsToshow.map((blog) => {
         return (
           <Blog
             key={blog.id}

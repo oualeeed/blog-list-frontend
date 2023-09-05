@@ -7,11 +7,7 @@ import userEvent from '@testing-library/user-event'
 describe('<BlogFrom />', () => {
   test('', async () => {
     const createBlog = jest.fn()
-    render(
-      <BlogForm
-        createBlog={createBlog}
-      />
-    )
+    render(<BlogForm createBlog={createBlog} />)
 
     const blog = {
       title: 'title for test',

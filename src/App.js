@@ -7,8 +7,7 @@ import User from './components/User'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
 import blogService from './services/blogs'
-import { useNotify } from './reducers/notificationReducer'
-import { initializeBlogs, setBlogs } from './reducers/blogReducer'
+import { initializeBlogs } from './reducers/blogReducer'
 import { setUser } from './reducers/userReducer'
 import LoginForm from './components/LoginForm'
 import loginService from './services/login'
@@ -17,8 +16,6 @@ const App = () => {
   const blogs = useSelector((state) => state.blogs)
   const user = useSelector((state) => state.user)
   const dispatch = useDispatch()
-  const notifyInfo = useNotify('info')
-  const notifyError = useNotify('error')
 
   useEffect(() => {
     const loggedInUserJSON = window.localStorage.getItem('loggedInUser')

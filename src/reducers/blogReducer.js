@@ -6,7 +6,7 @@ const blogSlice = createSlice({
   initialState: [],
   reducers: {
     appendBlog(state, action) {
-      return state.push(action.payload)
+      return state.concat(action.payload)
     },
     setBlogs(state, action) {
       return action.payload

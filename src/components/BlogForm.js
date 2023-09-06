@@ -2,7 +2,7 @@ import { useState } from 'react'
 import blogService from '../services/blogs'
 import { useDispatch, useSelector } from 'react-redux'
 import { appendBlog } from '../reducers/blogReducer'
-import { notify, useNotify } from '../reducers/notificationReducer'
+import { useNotify } from '../reducers/notificationReducer'
 
 const BlogForm = () => {
   const [url, setURL] = useState('')

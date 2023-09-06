@@ -1,18 +1,34 @@
 import { useState } from 'react'
+import blogService from '../services/blogs'
+import { useDispatch, useSelector } from 'react-redux'
+import { appendBlog } from '../reducers/blogReducer'
+import { notify, useNotify } from '../reducers/notificationReducer'
 
-const BlogForm = ({ createBlog }) => {
+const BlogForm = () => {
   const [url, setURL] = useState('')
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
+  const dispatch = useDispatch()
+  const notifyInfo = useNotify('info')
+  const notifyError = useNotify('error')
+  const user = useSelector((state) => state.user)
 
   const addBlog = async (event) => {
     event.preventDefault()
-    if (await createBlog({ title, author, url })) {
-      setAuthor('')
-      setTitle('')
-      setURL('')
+    try {
+      const createdBlog = await blogService.create({
+        title,
+        author,
+        url,
+      })
+      dispatch(appendBlog(createdBlog))
+      notifyInfo(`a new blog ${title}! By ${author}`)
+    } catch (error) {
+      notifyError("something wen't wrong please try again.")
+      blogService.setToken(user.token)
     }
   }
+
   return (
     <form onSubmit={addBlog}>
       <div>

@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { useDispatch } from 'react-redux'
 
 const notificationSlice = createSlice({
   name: 'notification',
   initialState: {
     message: '',
-    type: 'error'
+    type: 'error',
   },
   reducers: {
     notifyMessage(state, action) {
@@ -13,11 +14,20 @@ const notificationSlice = createSlice({
     removeNotification() {
       return {
         message: '',
-        type: 'error'
+        type: 'error',
       }
     },
   },
 })
 
-export const { notifyMessage, removeNotification } = notificationSlice.actions
+export const useNotify = (type) => {
+  const dispatch = useDispatch()
+  return (message) => {
+    dispatch(notifyMessage({ message, type }))
+    setTimeout(() => dispatch(removeNotification()), 5000)
+  }
+}
+
+export const { notifyMessage, removeNotification, notify } =
+  notificationSlice.actions
 export default notificationSlice.reducer

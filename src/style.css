@@ -46,6 +46,7 @@ div.notification {
   font-size: 1.1em;
   padding: 0.2em;
   transition: 0.5s ease;
+  cursor: pointer;
 }
 
 .login-div button:hover {

@@ -1,32 +1,30 @@
 import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import './style.css'
 import Notification from './components/Notification'
 import Blog from './components/Blog'
 import User from './components/User'
 import BlogForm from './components/BlogForm'
+import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
-import './style.css'
-import Togglable from './components/Togglable'
-import { useDispatch, useSelector } from 'react-redux'
-import {
-  notifyMessage,
-  removeNotification,
-} from './reducers/notificationReducer'
+import { useNotify } from './reducers/notificationReducer'
 import { initializeBlogs, setBlogs } from './reducers/blogReducer'
+import { loginUser, setUser } from './reducers/userReducer'
 
 const App = () => {
   const blogs = useSelector((state) => state.blogs)
-  const { message, type } = useSelector((state) => state.notification)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
+  const user = useSelector((state) => state.user)
   const dispatch = useDispatch()
+  const notify = useNotify('error')
 
   useEffect(() => {
     const loggedInUserJSON = window.localStorage.getItem('loggedInUser')
     if (loggedInUserJSON !== null) {
       const user = JSON.parse(loggedInUserJSON)
-      setUser(user)
+      dispatch(setUser(user))
       blogService.setToken(user.token)
     }
   }, [])
@@ -35,27 +33,24 @@ const App = () => {
     dispatch(initializeBlogs())
   }, [])
 
-  const login = async (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault()
     const credentials = {
       username,
       password,
     }
     try {
-      const response = await loginService.login(credentials)
-      setUser(response)
-      blogService.setToken(response.token)
-      setUsername('')
-      setPassword('')
+      await dispatch(loginUser(credentials))
     } catch (error) {
-      notify('Wrong username or password', ERROR)
+      notify('Wrong username or password')
+      console.log('hello')
     }
   }
 
   const logout = (event) => {
     event.preventDefault()
     loginService.logout()
-    setUser(null)
+    dispatch(setUser(null))
   }
 
   const createBlog = async ({ title, author, url }) => {
@@ -75,33 +70,13 @@ const App = () => {
     }
   }
 
-  const upvoteBlog = (blog) => async () => {
-    const updatedBlog = {
-      ...blog,
-      likes: blog.likes + 1,
-    }
-    const response = await blogService.update(updatedBlog)
-    setBlogs(blogs.map((blog) => (blog.id === response.id ? response : blog)))
-  }
-
   const ERROR = 'error'
   const INFO = 'info'
-  const notify = (message, type) => {
-    dispatch(notifyMessage({ message, type }))
-    setTimeout(() => {
-      dispatch(removeNotification())
-    }, 5000)
-  }
 
   let blogsToshow = [...blogs]
   blogsToshow.sort((a, b) => {
     return b.likes - a.likes
   })
-
-  const removeBlog = (id) => () => {
-    blogService.remove(id)
-    setBlogs(blogs.filter((b) => b.id !== id))
-  }
 
   if (user === null) {
     const center = {
@@ -114,8 +89,8 @@ const App = () => {
       <div style={center}>
         <div className="login-div">
           <h2>Log in to application</h2>
-          <Notification notification={message} type={type} />
-          <form onSubmit={login}>
+          <Notification />
+          <form onSubmit={handleLogin}>
             <div>
               <input
                 type="text"
@@ -147,24 +122,15 @@ const App = () => {
     <div>
       <h2>Blogs</h2>
       <User user={user} logout={logout} />
-      <Notification notification={message} type={type} />
+      <Notification />
       <Togglable buttonLabel="create a note">
         <BlogForm createBlog={createBlog} />
       </Togglable>
       {blogsToshow.map((blog) => {
-        return (
-          <Blog
-            key={blog.id}
-            blog={blog}
-            user={user}
-            upvoteBlog={upvoteBlog}
-            removeBlog={removeBlog(blog.id)}
-          />
-        )
+        return <Blog key={blog.id} blog={blog} user={user} />
       })}
     </div>
   )
 }
 
-//<Blog key={blog.id} blog={blog} />
 export default App

@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
+import { useDispatch } from 'react-redux'
+import { removeBlog, upvoteBlog } from '../reducers/blogReducer'
 
-const Blog = ({ blog, upvoteBlog, user, removeBlog }) => {
+const Blog = ({ blog, user }) => {
   const [visible, setVisible] = useState(false)
+  const dispatch = useDispatch()
 
   const hideWhenVisble = { display: visible ? 'none' : '' }
   const showWhenVisble = { display: visible ? '' : 'none' }
@@ -16,6 +19,8 @@ const Blog = ({ blog, upvoteBlog, user, removeBlog }) => {
     marginBottom: 5,
   }
 
+  const likeABlog = (blog) => () => dispatch(upvoteBlog(blog))
+
   return (
     <div style={style} className="blog">
       <div style={hideWhenVisble} className="blog-shrinked">
@@ -26,7 +31,7 @@ const Blog = ({ blog, upvoteBlog, user, removeBlog }) => {
         {blog.title} by {blog.author} <br />
         {blog.url} <br />
         likes {blog.likes}{' '}
-        <button id="like-button" onClick={upvoteBlog(blog)}>
+        <button id="like-button" onClick={likeABlog(blog)}>
           like
         </button>
         <br />
@@ -35,7 +40,10 @@ const Blog = ({ blog, upvoteBlog, user, removeBlog }) => {
         {blog.user.username === user.username && (
           <>
             <br />
-            <button id="remove-button" onClick={removeBlog}>
+            <button
+              id="remove-button"
+              onClick={() => dispatch(removeBlog(blog.id))}
+            >
               remove
             </button>
           </>

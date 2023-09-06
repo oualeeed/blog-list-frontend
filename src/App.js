@@ -6,6 +6,7 @@ import Notification from './components/Notification'
 import User from './components/User'
 import Users from './components/Users'
 import UserView from './components/UserView'
+import Blog from './components/Blog'
 //import BlogForm from './components/BlogForm'
 // import Togglable from './components/Togglable'
 import blogService from './services/blogs'
@@ -13,6 +14,8 @@ import { initializeBlogs } from './reducers/blogReducer'
 import { setUser } from './reducers/userReducer'
 import LoginForm from './components/LoginForm'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+import userService from './services/users'
+import { setUsers } from './reducers/usersReducer'
 
 const App = () => {
   const blogs = useSelector((state) => state.blogs)
@@ -30,6 +33,10 @@ const App = () => {
 
   useEffect(() => {
     dispatch(initializeBlogs())
+  }, [])
+
+  useEffect(() => {
+    userService.getAll().then((users) => dispatch(setUsers(users)))
   }, [])
 
   let blogsToshow = [...blogs]

@@ -23,6 +23,9 @@ const BlogForm = () => {
       })
       dispatch(appendBlog(createdBlog))
       notifyInfo(`a new blog ${title}! By ${author}`)
+      setAuthor('')
+      setURL('')
+      setTitle('')
     } catch (error) {
       notifyError("something wen't wrong please try again.")
       blogService.setToken(user.token)

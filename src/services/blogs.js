@@ -22,6 +22,22 @@ const create = async (blog) => {
   return response.data
 }
 
+const comment = async (id, comment) => {
+  console.log('hey')
+  const config = {
+    headers: {
+      Authorization: token,
+    },
+  }
+  console.log(config)
+  const response = await axios.post(
+    `${baseUrl}/${id}/comments`,
+    { content: comment },
+    config,
+  )
+  return response.data
+}
+
 const update = async (blog) => {
   const config = {
     headers: {
@@ -41,4 +57,4 @@ const remove = async (id) => {
   await axios.delete(`${baseUrl}/${id}`, config)
 }
 
-export default { getAll, create, setToken, update, remove }
+export default { getAll, create, setToken, update, remove, comment }

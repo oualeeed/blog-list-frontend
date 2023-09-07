@@ -1,0 +1,21 @@
+.logged-in-user {
+  display: flex;
+  align-items: center;
+  overflow: scroll;
+}
+
+.logged-in-user-name {
+  border-bottom: 2px solid white;
+  margin-right: 10px;
+}
+
+.logout-button {
+  background-color: orangered;
+  color: white;
+  font-weight: 800;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px red;
+  cursor: pointer;
+}

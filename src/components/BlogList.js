@@ -2,32 +2,40 @@ import Togglable from '../components/Togglable'
 import BlogForm from '../components/BlogForm'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import './BlogList.css'
 
 const BlogList = () => {
   const blogs = useSelector((state) => state.blogs)
 
   const blogsToshow = [...blogs]
+  blogsToshow.sort((a, b) => {
+    return b.likes - a.likes
+  })
 
-  const style = {
-    border: '1px solid black',
-    padding: '5px',
-    margin: '0',
-  }
+  let i = 0
 
   return (
-    <div>
-      <Togglable buttonLabel="create a note">
+    <div className="container-blogs">
+      <Togglable buttonLabel="+">
         <BlogForm />
       </Togglable>
-      {blogsToshow
-        .sort((a, b) => {
-          return b.likes - a.likes
-        })
-        .map((blog) => (
-          <p style={style} key={blog.id}>
-            <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
-          </p>
+      <div className="blog-list">
+        {blogsToshow.map((blog) => (
+          <Link className='blog-link' key={blog.id} to={`/blogs/${blog.id}`}>
+            <div className="blog-item" >
+              <p className='blog-title' >
+                <span className='blog-index'>{++i}.</span>
+                <span className='blog-title-text'>
+                  {blog.title} by {blog.author}
+                </span>
+              </p>
+              <div className='blog-upvotes'>
+                { blog.likes } upvotes | Added by <span>{blog.user.username}</span> | {blog.comments.length} comments
+              </div>
+            </div>
+          </Link>
         ))}
+      </div>
     </div>
   )
 }

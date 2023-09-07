@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import './style.css'
+import './App.css'
 import Notification from './components/Notification'
 //import Blog from './components/Blog'
 import User from './components/User'
@@ -13,7 +13,7 @@ import blogService from './services/blogs'
 import { initializeBlogs } from './reducers/blogReducer'
 import { setUser } from './reducers/userReducer'
 import LoginForm from './components/LoginForm'
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import userService from './services/users'
 import { setUsers } from './reducers/usersReducer'
 import BlogView from './components/BlogView'
@@ -45,16 +45,35 @@ const App = () => {
 
   return (
     <Router>
-      <div>
-        <h2>Blogs</h2>
-        <User />
+      <div className="main">
+        <header className="header">
+          <div className="navigation-links">
+            <h2 className="brand">
+              <Link className="brand" to="/">
+                Geeks and Blogs
+              </Link>
+            </h2>
+            <Link className="link" to="/">
+              Blogs
+            </Link>
+            <Link className="link" to="/users">
+              Users
+            </Link>
+          </div>
+          <User />
+        </header>
         <Notification />
         <Routes>
           <Route path="/" element={<BlogList />} />
-          <Route path="/users/:id" element={<UserView />} />
           <Route path="/users" element={<Users />} />
+          <Route path="/users/:id" element={<UserView />} />
           <Route path="/blogs/:id" element={<BlogView />} />
         </Routes>
+        <footer className='footer'>
+          <span className='copy'>&copy;</span>
+          Oualid El-feraoui, 2023. Open source on
+          <a target="_blank" href="https://github.com/z3aibila/blog-list-frontend" rel="noreferrer"><i className="fa-brands fa-github"></i></a>
+        </footer>
       </div>
     </Router>
   )

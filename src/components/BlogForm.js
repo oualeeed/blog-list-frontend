@@ -3,6 +3,8 @@ import blogService from '../services/blogs'
 import { useDispatch, useSelector } from 'react-redux'
 import { appendBlog } from '../reducers/blogReducer'
 import { useNotify } from '../reducers/notificationReducer'
+import './BlogForm.css'
+import { useNavigate } from 'react-router-dom'
 
 const BlogForm = () => {
   const [url, setURL] = useState('')
@@ -12,6 +14,7 @@ const BlogForm = () => {
   const notifyInfo = useNotify('info')
   const notifyError = useNotify('error')
   const user = useSelector((state) => state.user)
+  const navigate = useNavigate()
 
   const addBlog = async (event) => {
     event.preventDefault()
@@ -26,6 +29,7 @@ const BlogForm = () => {
       setAuthor('')
       setURL('')
       setTitle('')
+      navigate(`/blogs/${createdBlog.id}`)
     } catch (error) {
       notifyError("something wen't wrong please try again.")
       blogService.setToken(user.token)
@@ -33,9 +37,8 @@ const BlogForm = () => {
   }
 
   return (
-    <form onSubmit={addBlog}>
-      <div>
-        Title :{' '}
+    <form className='add-blog-form-fields' onSubmit={addBlog}>
+      <div className='add-blog-form-field' >
         <input
           type="text"
           value={title}
@@ -44,8 +47,7 @@ const BlogForm = () => {
           onChange={({ target }) => setTitle(target.value)}
         />
       </div>
-      <div>
-        Author :{' '}
+      <div className='add-blog-form-field'>
         <input
           type="text"
           value={author}
@@ -54,8 +56,7 @@ const BlogForm = () => {
           onChange={({ target }) => setAuthor(target.value)}
         />
       </div>
-      <div>
-        URL :{' '}
+      <div className='add-blog-form-field'>
         <input
           type="text"
           value={url}

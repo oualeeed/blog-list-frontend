@@ -1,4 +1,68 @@
 * {
   margin: 0;
   padding: 0;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+
+.main {
+  height: 100vh;
+  margin: auto;
+  box-shadow: 0 0 3px orangered;
+}
+
+.header {
+  display: flex;
+  z-index: 999;
+  justify-content: space-between;
+  align-items: center;
+  padding: 11px 10px;
+  color: white;
+  position: fixed;
+  right:0;
+  left: 0;
+  background-color: rgb(32, 32, 32);
+}
+
+.brand {
+  color: orangered;
+  text-shadow: 0 0 5px red;
+}
+  
+.navigation-links {
+    display: flex;
+    align-items: center;
+}
+  
+.navigation-links .link {
+  margin-left: 10px;
+  text-decoration: none;
+  color: white;
+  padding: 5px;
+  font-weight: 600;
+}
+.navigation-links .link:hover {
+  background-color: orangered;
+}
+
+.footer {
+  vertical-align: top;
+  font-size: 1.1em;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: #eee;
+  padding: 5px;
+}
+
+.footer a{
+  margin-left: 5px;
+  color: black;
+}
+
+.copy {
+  font-size: 1.5em;
+  margin-right: 3px;
 }

@@ -1,0 +1,57 @@
+.container-blogs {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+}
+
+.blog-list {
+  background-color: black;
+  width: 100%;
+  padding-left: 11px;
+  padding-top: 11px;
+  min-height: 100vh;
+  padding-top: 60px;
+}
+
+.blog-item {
+  color: white;
+  font-weight: bold;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+
+.blog-title{
+  color: white;
+  font-size: 1.2em;
+  display: block; 
+  margin-bottom: 5px;
+}
+
+.blog-index {
+  padding-right: 8px;
+  text-decoration: none ;
+  color: orangered;
+  text-shadow: 0 0 5px red;
+}
+
+.blog-title-text {
+  text-decoration: underline;
+}
+
+.blog-item:hover {
+  background-color: blue;
+  .blog-index{
+    color: orangered;
+  }
+}
+
+
+.blog-upvotes {
+  color: #777;
+  font-size: 0.8em;
+}
+
+.blog-link {
+  text-decoration: none;
+}

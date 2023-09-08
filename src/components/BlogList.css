@@ -55,3 +55,15 @@
 .blog-link {
   text-decoration: none;
 }
+
+@media (max-width: 760px) {
+  .blog-list{
+    padding-top: 100px;
+  }
+}
+
+@media (max-width: 410px) {
+  .blog-list{
+    padding-top: 130px;
+  }
+}

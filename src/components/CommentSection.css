@@ -1,0 +1,34 @@
+.comments-title {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.comment-field {
+  width: calc(100% - 110px);
+  background-color: gray;
+  border: none;
+  padding: 5px;
+}
+
+.comment-button {
+  color: white;
+  background-color: orangered;
+  height: 27px;
+  width: 100px;
+  border: none;
+  cursor: pointer;
+  transition: 1s;
+}
+
+.comment-button:hover {
+  background-color: red;
+  box-shadow: 0 0 20px red;
+}
+
+.comment {
+  padding: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-left: 2px solid orangered;
+  background-color: rgb(20, 20, 20);
+}

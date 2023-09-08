@@ -30,6 +30,12 @@ td {
   padding: 5px;
 }
 
+th {
+  color: yellow;
+  font-size: 1.2em;
+  text-shadow: 0 0 4px yellow;
+}
+
 .username {
   color: white ;
 }
@@ -37,4 +43,16 @@ td {
 .username:hover {
   color: orangered ;
   text-shadow: 0 0 8px red;
+}
+
+@media (max-width: 560px) {
+  .users-container {
+    padding-top: 100px;
+  }
+}
+
+@media (max-width: 405px) {
+  .users-container {
+    padding-top: 120px;
+  }
 }

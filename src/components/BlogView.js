@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, useParams } from 'react-router-dom'
-import { modifyBlog, removeBlog, upvoteBlog } from '../reducers/blogReducer'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import { removeBlog, upvoteBlog } from '../reducers/blogReducer'
 import { useNotify } from '../reducers/notificationReducer'
-import { useState } from 'react'
-import blogService from '../services/blogs'
+import './BlogView.css'
+import CommetnSection from './CommentSection'
 
 const BlogView = () => {
   const id = useParams().id
@@ -12,7 +12,6 @@ const BlogView = () => {
   const blog = useSelector((state) =>
     state.blogs.find((blog) => blog.id === id),
   )
-  const [comment, setComment] = useState('')
   const notify = useNotify('info')
   const notifyErr = useNotify('error')
   const navigate = useNavigate()
@@ -29,38 +28,34 @@ const BlogView = () => {
     }
   }
 
-  const addComment = (id) => async (event) => {
-    event.preventDefault()
-    const blog = await blogService.comment(id, comment)
-    dispatch(modifyBlog(blog))
-  }
+
 
   if (!blog) return null
   return (
-    <div>
-      <h2>{blog.title}</h2>
-      <a target="_blank" href={blog.url} rel="noreferrer">
-        {blog.url}
-      </a>
-      <p>{blog.likes} likes</p> <button onClick={likeABlog(blog)}>like</button>
-      <p>Added by {blog.user.name}</p>
-      {user.name === blog.user.name && (
-        <button onClick={deleteBlog(blog.id)}>remove</button>
-      )}
-      <h3>Comments</h3>
-      <form onSubmit={addComment(blog.id)}>
-        <input
-          onChange={(e) => setComment(e.target.value)}
-          type="text"
-          value={comment}
-        />
-        <button type="submit">add comment</button>
-      </form>
-      <ul>
-        {blog.comments.map((comment) => {
-          return <li key={comment._id}>{comment.content}</li>
-        })}
-      </ul>
+    <div className='blog-container'>
+      <div className='blog-post'>
+        <h2 className='blog-title'>{blog.title}</h2>
+        <div className='blog-details'>
+          You can read the blog
+          <a target="_blank" href={blog.url} rel="noreferrer">here</a>
+        </div>
+        <button className="blog-like-button" onClick={likeABlog(blog)}>
+          <i className="fa-solid fa-up-long"></i>
+        </button>
+        <div className='blog-likes'>
+          {blog.likes} likes
+        </div>
+        <p className='blog-user'>
+          Added by
+          <Link className="blog-user-link" to={`/users/${blog.user.id}`}>
+            {blog.user.name}
+          </Link>
+        </p>
+        {user.name === blog.user.name && (
+          <button className='blog-remove-button' onClick={deleteBlog(blog.id)}>X</button>
+        )}
+        <CommetnSection blog={blog} />
+      </div>
     </div>
   )
 }

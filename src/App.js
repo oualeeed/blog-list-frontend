@@ -50,7 +50,7 @@ const App = () => {
           <div className="navigation-links">
             <h2 className="brand">
               <Link className="brand" to="/">
-                Geeks and Blogs
+                (Geeks && Blogs)
               </Link>
             </h2>
             <Link className="link" to="/">

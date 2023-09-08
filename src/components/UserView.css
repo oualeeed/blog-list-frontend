@@ -1,0 +1,45 @@
+.user-container {
+  color: white;
+  background-color: black;
+  padding-top: 90px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.user-frame {
+  width: 90%;
+  border-radius: 5px;
+  box-shadow: 0 0 10px red;
+  padding: 20px;
+  position: relative;
+  border-radius: 10px;
+}
+
+.user-title {
+  font-size: 1.2em;
+}
+
+.user-link-to-blog{
+  color: orangered;
+  text-decoration: none;
+  text-shadow: 0 0 5px red;
+  font-size: 1.1em;
+  font-weight: 600;
+  margin-left: 3px ;
+  padding: 2px;
+  display: block;
+}
+
+.user-link-to-blog:hover {
+  background-color: orangered;
+  color: white;
+}
+
+
+@media (max-width: 560px) {
+  .user-container {
+    padding-top: 120px;
+  }
+}

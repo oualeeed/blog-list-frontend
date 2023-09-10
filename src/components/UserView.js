@@ -15,7 +15,7 @@ const UserView = () => {
         <h3>Added blogs</h3>
         <ul>
           {user.blogs.map((blog) => (
-            <Link className='user-link-to-blog' key={blog.id}>{blog.title}</Link>
+            <Link className='user-link-to-blog' to={`/blogs/${blog.id}`} key={blog.id}>{blog.title}</Link>
           ))}
         </ul>
       </div>

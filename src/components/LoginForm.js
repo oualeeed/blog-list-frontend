@@ -3,6 +3,7 @@ import Notification from './Notification'
 import { useDispatch } from 'react-redux'
 import { loginUser } from '../reducers/userReducer'
 import { useNotify } from '../reducers/notificationReducer'
+import './LoginForm.css'
 
 const LoginForm = () => {
   const [username, setUsername] = useState('')
@@ -25,32 +26,33 @@ const LoginForm = () => {
   }
 
   return (
-    <div>
-      <div>
-        <h2>Log in to application</h2>
-        <Notification />
-        <form onSubmit={handleLogin}>
-          <div>
-            <input
-              type="text"
-              value={username}
-              id="username"
-              placeholder="username"
-              onChange={({ target }) => setUsername(target.value)}
-            />
-          </div>
-          <div>
-            <input
-              type="text"
-              value={password}
-              id="password"
-              placeholder="password"
-              onChange={({ target }) => setPassword(target.value)}
-            />
-          </div>
-          <button type="submit">log in</button>
-        </form>
-      </div>
+    <div className='login-form-container'>
+      <h1 className='login-form-title'>(Geeks && Blogs)</h1>
+      <Notification />
+      <form className='login-form' onSubmit={handleLogin}>
+        <span className='login-to-the-app'>Log in to the Application</span>
+        <div className='login-form-text-field'>
+          <input
+            className='login-form-text-field-input'
+            type="text"
+            value={username}
+            id="username"
+            placeholder="username"
+            onChange={({ target }) => setUsername(target.value)}
+          />
+        </div>
+        <div className='login-form-text-field'>
+          <input
+            className='login-form-text-field-input'
+            type="text"
+            value={password}
+            id="password"
+            placeholder="password"
+            onChange={({ target }) => setPassword(target.value)}
+          />
+        </div>
+        <button className="login-fomr-button" type="submit">log in</button>
+      </form>
     </div>
   )
 }

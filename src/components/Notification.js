@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux'
+import './Notification.css'
 
 const Notification = () => {
   const { message, type } = useSelector((state) => state.notification)

@@ -29,7 +29,7 @@ const BlogForm = () => {
       setAuthor('')
       setURL('')
       setTitle('')
-      navigate(`/blogs/${createdBlog.id}`)
+      setTimeout(() => navigate(`/blogs/${createdBlog.id}`), 4000)
     } catch (error) {
       notifyError("something wen't wrong please try again.")
       blogService.setToken(user.token)

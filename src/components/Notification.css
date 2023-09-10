@@ -1,0 +1,20 @@
+.notification {
+  font-size: 1.2em;
+  font-weight: 600;
+  position: absolute;
+  bottom: 190px;
+  right: 20px;
+  padding: 20px;
+  border-radius: 5px;
+  z-index: 999;
+}
+
+.error {
+  color: red;  
+  border: 2px solid red;
+}
+
+.info {
+  color: greenyellow;  
+  border: 2px solid greenyellow;
+}

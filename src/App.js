@@ -17,10 +17,14 @@ import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import userService from './services/users'
 import { setUsers } from './reducers/usersReducer'
 import BlogView from './components/BlogView'
+import { useNotify } from './reducers/notificationReducer'
 
 const App = () => {
   const user = useSelector((state) => state.user)
   const dispatch = useDispatch()
+  const notify = useNotify('info')
+
+  if (user !== null ) notify(`Welcome ${user.username}, happy to see you 😃`)
 
   useEffect(() => {
     const loggedInUserJSON = window.localStorage.getItem('loggedInUser')
@@ -40,7 +44,16 @@ const App = () => {
   }, [])
 
   if (user === null) {
-    return <LoginForm />
+    return (
+      <>
+        <LoginForm />
+        <footer className='footer'>
+          <span className='copy'>&copy;</span>
+          Oualid El-feraoui, 2023. Open source on
+          <a target="_blank" href="https://github.com/z3aibila/blog-list-frontend" rel="noreferrer"><i className="fa-brands fa-github"></i></a>
+        </footer>
+      </>
+    )
   }
 
   return (

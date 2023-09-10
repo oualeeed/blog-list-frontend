@@ -3,15 +3,22 @@ import { useDispatch } from "react-redux"
 import blogService from "../services/blogs"
 import { modifyBlog } from "../reducers/blogReducer"
 import "./CommentSection.css"
+import { useNotify } from "../reducers/notificationReducer"
 
 const CommetnSection = ({ blog }) => {
   const [comment, setComment] = useState('')
+  const notifyErr = useNotify('error')
   const dispatch = useDispatch()
 
   const addComment = (id) => async (event) => {
     event.preventDefault()
-    const blog = await blogService.comment(id, comment)
-    dispatch(modifyBlog(blog))
+    try {
+      const blog = await blogService.comment(id, comment)
+      dispatch(modifyBlog(blog))
+      setComment('')
+    } catch (error) {
+      notifyErr('Sorry there was some error. Please, try again.')
+    }
   }
 
   return (

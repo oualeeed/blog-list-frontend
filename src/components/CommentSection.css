@@ -9,6 +9,10 @@
   border: none;
   padding: 5px;
 }
+.comment-field::placeholder {
+  color: white;
+  font-weight: 600;
+}
 
 .comment-button {
   color: white;

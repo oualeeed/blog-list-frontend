@@ -16,7 +16,12 @@ const BlogView = () => {
   const notifyErr = useNotify('error')
   const navigate = useNavigate()
 
-  const likeABlog = (blog) => () => dispatch(upvoteBlog(blog))
+  const likeABlog = (id) => {
+    return () => {
+      console.log('hello')
+      dispatch(upvoteBlog(id))
+    }
+  }
 
   const deleteBlog = (id) => () => {
     try {
@@ -31,6 +36,7 @@ const BlogView = () => {
 
 
   if (!blog) return null
+
   return (
     <div className='blog-container'>
       <div className='blog-post'>
@@ -39,7 +45,7 @@ const BlogView = () => {
           You can read the blog
           <a target="_blank" href={blog.url} rel="noreferrer">here</a>
         </div>
-        <button className="blog-like-button" onClick={likeABlog(blog)}>
+        <button className="blog-like-button" onClick={likeABlog(blog.id)}>
           <i className="fa-solid fa-up-long"></i>
         </button>
         <div className='blog-likes'>

@@ -27,13 +27,18 @@ export const initializeBlogs = () => async (dispatch) => {
   dispatch(setBlogs(blogs))
 }
 
-export const upvoteBlog = (blog) => async (dispatch) => {
-  const updatedBlog = {
-    ...blog,
-    likes: blog.likes + 1,
-  }
-  const response = await blogService.update(updatedBlog)
-  dispatch(modifyBlog(response))
+// export const upvoteBlog = (blog) => async (dispatch) => {
+//   const updatedBlog = {
+//     ...blog,
+//     likes: blog.likes + 1,
+//   }
+//   const response = await blogService.update(updatedBlog)
+//   dispatch(modifyBlog(response))
+// }
+
+export const upvoteBlog = id => async (dispatch) => {
+  const likedBlog = await blogService.like(id)
+  dispatch(modifyBlog(likedBlog))
 }
 
 export const removeBlog = (id) => async (dispatch) => {

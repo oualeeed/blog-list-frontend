@@ -18,3 +18,15 @@
   color: greenyellow;  
   border: 2px solid greenyellow;
 }
+
+@media (max-width: 460px) {
+  .error {
+    color: black;  
+    background-color: red;
+  }
+
+  .info {
+    color: black;  
+    background-color: greenyellow;
+  }
+}

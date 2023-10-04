@@ -14,7 +14,8 @@
   text-shadow: 0 0 15px red;
   font-size: 5em;
   position: absolute;
-  top: 200px
+  top: 200px;
+  margin-bottom: 5px;
 }
 
 .login-form {
@@ -26,6 +27,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 1;
 }
 
 .login-to-the-app {
@@ -50,7 +52,7 @@
   margin-bottom: 5px;
 }
 
-.login-fomr-button {
+.login-form-button {
   background-color: orangered;
   color: white;
   font-weight: 800;
@@ -64,9 +66,15 @@
   transition: 2s;
 }
 
-.login-fomr-button:hover {
+.login-form-button:hover {
   background-color: red;
   box-shadow: 0 0 10px red;
+}
+
+.create-account-link{
+  color: white;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 @media (max-width: 790px) {

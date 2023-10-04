@@ -6,5 +6,10 @@ const getAll = async () => {
   return axios.get(baseUrl).then((response) => response.data)
 }
 
-const userService = { getAll }
+const createAccount = async (credentials) => {
+  const response = await axios.post(baseUrl, credentials)
+  return response.data
+}
+
+const userService = { getAll, createAccount }
 export default userService

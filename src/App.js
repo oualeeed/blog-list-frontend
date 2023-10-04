@@ -81,6 +81,7 @@ const App = () => {
           <Route path="/users" element={<Users />} />
           <Route path="/users/:id" element={<UserView />} />
           <Route path="/blogs/:id" element={<BlogView />} />
+          <Route path='/namik' element={<></>} />
         </Routes>
         <footer className='footer'>
           <span className='copy'>&copy;</span>
